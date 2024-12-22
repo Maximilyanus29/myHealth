@@ -1,0 +1,75 @@
+app\models\User Object
+(
+    [lastName:app\models\User:private] => Рябцев
+    [firstName:app\models\User:private] => Максим
+    [birthdate:app\models\User:private] => 27.09.1996
+    [photoPath:app\models\User:private] => /path/to/photo
+    [diseases:app\models\User:private] => Array
+        (
+            [0] => app\models\Diseas Object
+                (
+                    [name:app\models\Diseas:private] => Язва
+                    [dateStart:app\models\Diseas:private] => 01-01-2024
+                    [dateEnd:app\models\Diseas:private] => 14-01-2024
+                    [treatment:app\models\Diseas:private] => Array
+                        (
+                            [0] => антибиотик №1
+                            [1] => антибиотик №2
+                            [2] => постельный режим
+                        )
+
+                    [files:app\models\Diseas:private] => Array
+                        (
+                        )
+
+                    [is_chronic:app\models\Diseas:private] => 1
+                )
+
+            [1] => app\models\Diseas Object
+                (
+                    [name:app\models\Diseas:private] => Язва
+                    [dateStart:app\models\Diseas:private] => 01-01-2024
+                    [dateEnd:app\models\Diseas:private] => 14-01-2024
+                    [treatment:app\models\Diseas:private] => Array
+                        (
+                            [0] => антибиотик №1
+                            [1] => антибиотик №2
+                            [2] => постельный режим
+                        )
+
+                    [files:app\models\Diseas:private] => Array
+                        (
+                        )
+
+                    [is_chronic:app\models\Diseas:private] => 
+                )
+
+        )
+
+    [surveys:app\models\User:private] => Array
+        (
+            [0] => app\models\Survey Object
+                (
+                    [name:app\models\Survey:private] => Обследование1
+                    [dateStart:app\models\Survey:private] => 01-01-2024
+                    [dateEnd:app\models\Survey:private] => 14-01-2024
+                    [result:app\models\Survey:private] => Array
+                        (
+                        )
+
+                )
+
+            [1] => app\models\Survey Object
+                (
+                    [name:app\models\Survey:private] => Обследование2
+                    [dateStart:app\models\Survey:private] => 01-01-2024
+                    [dateEnd:app\models\Survey:private] => 15-01-2024
+                    [result:app\models\Survey:private] => Array
+                        (
+                        )
+
+                )
+
+        )
+
+)

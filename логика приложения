@@ -1,0 +1,75 @@
+При открытии приложения дать возможность записать давление(нижнее, верхнее, пульс, коммент). Время автоматом ставить.
+
+вывод инфы про меня:
+фото: можно сделать фото каждый день, что бы потом посмотреть в динамике как я выгляжу(фото с оскалом, что бы видно было состояние зубов).
+фото горла? что бы на ранней стадии по нейросети определять состояние горла.
+перенесенные заболевания:
+
+жалобы:
+звон в голове.
+
+
+список заболеваний:
+заболевание{
+    начало, конец, лечение
+}
+
+
+Исследования:
+{
+    дата, результат, фото или документ
+}
+
+
+таймлайн:
+события
+обследования{
+    анализы крови, мочи, кала
+    экг, ээг и т.д.
+}
+
+________________________________________________________________
+
+getUsers();
+getDiseases($userId);
+getobsledovaniya($userId);
+getCronicDiseases($userId);
+getZhalobys($userId);
+
+
+PHPArrayRepositoryUser implement IRepositoryUser{
+	getUsers();
+}
+
+MysqlRepositoryUser implement IRepositoryUser{
+	getUsers();
+}
+
+IRepositoryUser{
+	getUsers();
+}
+
+
+
+IRepository{
+	getUsers();
+	getUser($userId);
+	getDisease($userId);
+	getobsledovaniya($userId);
+	getCronicDiseases($userId);
+	getZhalobys($userId);
+}
+
+
+
+$user = new User($disesases, $obsledovaniya, $chronicDisesases, $zhalobi);
+
+/home/project/storage/userFiles/{user_id}/avatar.ext
+/home/project/storage/userFiles/{user_id}/diseases_{mnemo}_{file_name}_{timestamp}.ext
+/home/project/storage/userFiles/{user_id}/obsledovanie_{mnemo}_{file_name}_{timestamp}.ext
+/home/project/storage/userFiles/{user_id}/photo_{mnemo}_{file_name}_{timestamp}.ext
+
+
+
+
+

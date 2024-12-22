@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>123</title>
+    <style>
+        html{
+            overflow: hidden;
+        }
+        .timeline{
+            width: 90%;
+            margin: 0 auto;
+            background: silver;
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .timeline-point{
+            background: black;
+            width: 3px;
+            height: 50px;
+        }
+        .timeline-point .date{
+            width: 100px;
+            margin-top: 50px;
+        }
+        .hidden-info{
+            display: flex;
+            /*background: silver;*/
+            width: max-content;
+            display: block;
+            margin: 51px auto;
+            width: 100%;
+        }
+        .hidden-info .start, .hidden-info .end{
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+сделать по центру указатель, и зажатием мышки или жестом на сенсоре передвигать дату.
+<div id="app"></div>
+
+
+<script src="main.js"></script>
+</body>
+</html>
