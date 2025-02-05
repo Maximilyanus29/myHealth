@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График данных исследований организма</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+
+        // Пример данных
+const data = {
+    labels: ['08:00', '12:00', '16:00', '20:00'], // Время измерений
+    datasets: [
+        {
+            label: 'Болит ли голова (0 - нет, 1 - да)',
+            data: [0, 1, 0, 1], // Данные о болях в голове
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: false
+        },
+        {
+            label: 'Давление (мм рт. ст.)',
+            data: [120, 130, 125, 135], // Данные о давлении
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false
+        },
+        {
+            label: 'Пульс (уд/мин)',
+            data: [70, 75, 80, 78], // Данные о пульсе
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            fill: false
+        }
+    ]
+};
+
+// Конфигурация графика
+const config = {
+    type: 'line',
+    data: data,
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Время'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Значения'
+                }
+            }
+        }
+    }
+};
+
+// Создание графика
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, config);
+
+
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset, index) => {
+        dataset.data.push(data[index]);
+    });
+    chart.update();
+}
+
+// Пример добавления новых данных
+addData(myChart, '22:00', [1, 140, 85]);
+
+setTimeout(function(){
+addData(myChart, '24:00', [1, 140, 85]);
+}, 1000)
+
+        
+
+    </script>
+</body>
+</html>

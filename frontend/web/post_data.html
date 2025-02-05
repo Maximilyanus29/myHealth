@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма здоровья</title>
+</head>
+<body>
+    <h1>Форма здоровья</h1>
+    <form id="healthForm">
+        <label for="temperature">Температура:</label>
+        <input type="text" id="temperature" name="temperature" required><br><br>
+
+        <label for="pressure">Давление:</label>
+        <input type="text" id="pressure" name="pressure" required><br><br>
+
+        <label for="pulse">Пульс:</label>
+        <input type="text" id="pulse" name="pulse" required><br><br>
+
+        <label for="headache">Болит голова?</label>
+        <input type="checkbox" id="headache" name="headache"><br><br>
+
+        <label for="tablets">Принимал таблетки:</label>
+        <input type="text" id="tablets" name="tablets"><br><br>
+
+        <label for="weight">Вес:</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="sleepQuality">Качество сна сегодня:</label>
+        <input type="text" id="sleepQuality" name="sleepQuality" required><br><br>
+
+        <label for="sleepDuration">Продолжительность сна:</label>
+        <input type="text" id="sleepDuration" name="sleepDuration" required><br><br>
+
+        <label for="comment">Комментарий:</label><br>
+        <textarea id="comment" name="comment"></textarea><br><br>
+
+        <button type="button" onclick="submitForm()">Отправить</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('healthForm');
+            const formData = new FormData(form);
+
+            const data = {"date" : new Date().toString()};
+
+            formData.forEach((value, key) => {
+                // Преобразуем чекбокс в булевое значение
+                if (key === 'headache') {
+                    data[key] = formData.get(key) !== undefined;
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            fetch('/api/save_data.php', { // Замените на ваш URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Успех:', result);
+                alert('Данные успешно отправлены!');
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке данных.');
+            });
+        }
+    </script>
+</body>
+</html>

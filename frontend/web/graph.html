@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График данных исследований организма</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+
+        
+
+        // Пример данных
+const data = {
+    labels: [], // Время измерений
+    datasets: [
+        {
+            label: 'Температура',
+            data: [], // Данные о болях в голове
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: false
+        },
+        // {
+        //     label: 'Болит ли голова (0 - нет, 1 - да)',
+        //     data: [0, 1, 0, 1], // Данные о болях в голове
+        //     borderColor: 'rgba(75, 192, 192, 1)',
+        //     borderWidth: 1,
+        //     fill: false
+        // },
+        {
+            label: 'Давление верхнее (мм рт. ст.)',
+            data: [], // Данные о давлении
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false
+        },
+        {
+            label: 'Давление нижнее (мм рт. ст.)',
+            data: [], // Данные о давлении
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false
+        },
+        {
+            label: 'Пульс (уд/мин)',
+            data: [], // Данные о пульсе
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            fill: false
+        }
+    ]
+};
+
+// Конфигурация графика
+const config = {
+    type: 'line',
+    data: data,
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Время'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Значения'
+                }
+            }
+        }
+    }
+};
+
+// Создание графика
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, config);
+
+
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset, index) => {
+        dataset.data.push(data[index]);
+    });
+    chart.update();
+}
+
+
+window.addEventListener('load', function() {
+    fetch('/api/show_data.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Сеть ответила с ошибкой: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const dataDiv = document.getElementById('data');
+            if (data.status === 'success') {
+
+                console.log(data);
+
+
+                for(let key in data.data){
+                    let el = data.data[key];
+
+                    myChart.data.labels.push(el.date);
+                    myChart.data.datasets[0].data.push(el.temperature)
+
+                    let press = el.pressure.split("/");
+
+                    myChart.data.datasets[1].data.push(press[0]);
+                    myChart.data.datasets[2].data.push(press[1]);
+                    myChart.data.datasets[3].data.push(el.pulse);
+
+                    // addData(myChart, key, [
+                    //     el['temperature'],
+                    //     el['pressure'],
+                    //     el['pulse'],
+                    //     el['sleepDuration'],
+                    //     el['sleepQuality'],
+                    //     el['tablets'],
+                    //     el['weight'],
+                    // ]);
+
+                }
+                myChart.update();
+
+            } 
+        });
+});
+
+
+
+// Пример добавления новых данных
+
+// setTimeout(function(){
+// addData(myChart, '24:00', [1, 140, 85]);
+// }, 1000)
+
+        
+
+    </script>
+</body>
+</html>

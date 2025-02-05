@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Получение и отображение данных</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #data {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Данные пользователей</h1>
+    <button id="fetchData">Получить данные</button>
+    <div id="data"></div>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', function() {
+            fetch('/api/show_data.php') // Укажите имя вашего PHP-скрипта
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Сеть ответила с ошибкой: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const dataDiv = document.getElementById('data');
+                    if (data.status === 'success') {
+
+                        document.body.innerHTML = JSON.stringify(data);
+
+                        return
+                        // Создание таблицы для отображения данных
+                        let table = '<table><tr><th>ID</th><th>Имя</th><th>Возраст</th></tr>';
+                        data.data.forEach(item => {
+                            table += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.age}</td></tr>`;
+                        });
+                        table += '</table>';
+                        dataDiv.innerHTML = table;
+                    } else {
+                        dataDiv.innerHTML = '<p style="color: red;">Ошибка: ' + data.message + '</p>';
+                    }
+                })
+                .catch(error => {
+                    const dataDiv = document.getElementById('data');
+                    dataDiv.innerHTML = '<p style="color: red;">Ошибка: ' + error.message + '</p>';
+                });
+        });
+    </script>
+</body>
+</html>

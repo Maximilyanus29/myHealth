@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма для заполнения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>*Форма для заполнения*</h2>
+
+    <form id="healthForm">
+        <label for="pressure">*Давление*:</label>
+        <input type="text" id="pressure" name="pressure" >
+
+        <label for="temperature">*Температура*:</label>
+        <input type="text" id="temperature" name="temperature" >
+
+        <label for="feeling">*Как себя чувствуешь*:</label>
+        <textarea id="feeling" name="feeling" rows="4" ></textarea>
+
+        <label for="facePhoto">*Фото лица*:</label>
+        <input type="file" id="facePhoto" name="facePhoto" accept="image/*" >
+
+        <label for="bodyPhoto">*Фото тела*:</label>
+        <input type="file" id="bodyPhoto" name="bodyPhoto" accept="image/*" >
+
+        <button type="submit">*Отправить*<\/button>
+    </form>
+
+    <script>
+        document.getElementById('healthForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Отменяем стандартное поведение формы
+
+            const formData = new FormData(this); // Создаем объект FormData из формы
+            const data = {
+                pressure: formData.get('pressure'),
+                temperature: formData.get('temperature'),
+                feeling: formData.get('feeling'),
+                facePhoto: formData.get('facePhoto').name, // Имя файла
+                bodyPhoto: formData.get('bodyPhoto').name // Имя файла
+            };
+
+            // Для отправки файлов в формате JSON, вам нужно будет обработать их отдельно
+            // Например, можно использовать base64 или отправить их отдельно
+
+            fetch('/api/submit', { // Укажите ваш эндпоинт бэкенда
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) // Преобразуем объект в JSON
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Преобразуем ответ в JSON
+                }
+                throw new Error('Ошибка сети');
+            })
+            .then(data => {
+                console.log('Успешно отправлено:', data);
+                alert('Форма успешно отправлена!');
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке формы.');
+            });
+        });
+    </script>
+
+</body>
+</html>
